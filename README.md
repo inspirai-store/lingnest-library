@@ -22,19 +22,19 @@ npx skills add inspirai-store/lingnest-library --skill lingnest-library -g
 
 1. 在官网下载区按操作系统和芯片选择压缩包，使用同页 SHA-256 校验文件检查下载。
 2. 解压后把 `lingnest.exe`（Windows）或 `lingnest`（macOS / Linux）放入个人可执行文件目录，并将该目录加入 PATH；Unix 系统需要可执行权限。也可在 AI 工具中使用程序的绝对路径。
-3. 使用支持只读 API 的资料库服务，在运行 AI 工具的同一系统账户／安全存储会话中授权：
+3. 在运行 AI 工具的同一系统账户／安全存储会话中授权，默认连接官网资料库：
 
 ```sh
-lingnest --server https://your-library.example auth login
-lingnest --server https://your-library.example auth status --json
-lingnest --server https://your-library.example search "关键词" --json
+lingnest auth login
+lingnest auth status --json
+lingnest search "关键词" --json
 ```
 
-将 `https://your-library.example` 换为自己的服务地址，并在后续命令中使用同一地址。浏览器核对客户端名称、确认码和只读权限后才允许连接，不向 AI 提供管理密钥或访问令牌。
+其他部署可在每条命令中添加 `--server https://your-library.example`，替换为自己的 HTTPS 服务地址。浏览器核对客户端名称、确认码和只读权限后才允许连接，不向 AI 提供管理密钥或访问令牌。
 
 ## 当前版本
 
-CLI v0.1.0 为预览版，需要服务端提供 `/oauth/device_authorization` 和 `/api/read/v1`。当前官网只读服务尚未上线；可先安装 Skill，使用已部署新版只读服务的资料库。不要把安装成功当作连接授权成功。
+CLI v0.1.0 为预览版。官网已上线浏览器确认授权及 `/api/read/v1` 只读服务，首次运行 `lingnest auth login` 后由你在浏览器完成确认。不要把安装成功当作连接授权成功。
 
 Windows x64 已实测；macOS Intel / Apple Silicon、Linux x64 / arm64 已交叉编译，尚未完成对应平台原生运行验收。Windows 使用 Credential Manager，macOS 使用 Keychain，Linux 需要已解锁的 Secret Service；安全存储不可用时不保存明文凭据。
 
